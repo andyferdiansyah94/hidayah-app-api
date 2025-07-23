@@ -35,7 +35,7 @@ class BarangController extends Controller
                     break;
             }
         }else {
-            $query->orderBy('updated_at', 'desc');
+            $query->orderBy('updated_at', 'asc');
         }
 
         $barangs = $query->get();
