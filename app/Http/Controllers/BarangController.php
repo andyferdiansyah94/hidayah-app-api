@@ -7,11 +7,43 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Barang::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        if ($request->has('sort')) {
+            switch ($request->input('sort')) {
+                case 'az':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'za':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'oldest':
+                    $query->orderBy('updated_at', 'asc');
+                    break;
+                case 'latest':
+                    $query->orderBy('updated_at', 'desc');
+                    break;
+                default:
+                    $query->orderBy('updated_at', 'desc');
+                    break;
+            }
+        }else {
+            $query->orderBy('updated_at', 'desc');
+        }
+
+        $barangs = $query->get();
+
+
         return response()->json([
             'message' => 'Get data barang successfully',
-            'data' => Barang::all(),
+            'data' => $barangs,
         ], 200);
     }
 
