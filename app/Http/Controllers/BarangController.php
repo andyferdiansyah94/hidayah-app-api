@@ -25,13 +25,13 @@ class BarangController extends Controller
                     $query->orderBy('name', 'desc');
                     break;
                 case 'oldest':
-                    $query->orderBy('updated_at', 'asc');
+                    $query->orderBy('created_at', 'asc');
                     break;
                 case 'latest':
-                    $query->orderBy('updated_at', 'desc');
+                    $query->orderBy('created_at', 'desc');
                     break;
                 default:
-                    $query->orderBy('updated_at', 'desc');
+                    $query->orderBy('created_at', 'desc');
                     break;
             }
         }else {
