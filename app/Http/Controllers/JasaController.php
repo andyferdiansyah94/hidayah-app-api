@@ -54,7 +54,6 @@ class JasaController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'price' => 'required|numeric',
-                'category' => 'required|string|max:255',
             ]);
 
             $jasa = Jasa::create($request->all());
@@ -90,7 +89,6 @@ class JasaController extends Controller
             $request->validate([
                 'name' => 'sometimes|required|string|max:255',
                 'price' => 'sometimes|required|numeric',
-                'category' => 'sometimes|required|string|max:255',
             ]);
 
             $jasa->update($request->all());
