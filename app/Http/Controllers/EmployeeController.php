@@ -19,7 +19,7 @@ class EmployeeController extends Controller
         if ($request->has('sort')) {
             switch ($request->input('sort')) {
                 case 'az':
-                    $query->orderBy('name', 'desc');
+                    $query->orderBy('name', 'asc');
                     break;
                 case 'za':
                     $query->orderBy('name', 'desc');
