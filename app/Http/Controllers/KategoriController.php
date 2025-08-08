@@ -7,11 +7,42 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Kategori::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        if ($request->has('sort')) {
+            switch ($request->input('sort')) {
+                case 'az':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'za':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'oldest':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'latest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }else {
+            $query->orderBy('updated_at', 'asc');
+        }
+
+        $kategori = $query->get();
+        
         return response()->json([
             'message' => 'Get data kategori successfully',
-            'data' => Kategori::all(),
+            'data' => $kategori,
         ], 200);
     }
 
