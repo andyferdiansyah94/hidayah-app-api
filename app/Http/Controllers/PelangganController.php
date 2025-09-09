@@ -9,9 +9,40 @@ class PelangganController extends Controller
 {
     public function index()
     {
+        $query = Pelanggan::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        if ($request->has('sort')) {
+            switch ($request->input('sort')) {
+                case 'az':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'za':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'oldest':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'latest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }else {
+            $query->orderBy('updated_at', 'asc');
+        }
+
+        $pelanggan = $query->get();
+
         return response()->json([
             'message' => 'Success get data',
-            'data' => Pelanggan::all(),
+            'data' => $pelanggan,
         ], 200);
     }
 
