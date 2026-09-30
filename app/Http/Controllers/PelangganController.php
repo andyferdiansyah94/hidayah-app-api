@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $query = Pelanggan::query();
 

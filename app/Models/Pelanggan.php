@@ -15,8 +15,8 @@ class Pelanggan extends Model
         'phone',
     ];
 
-    public function penjualans()
+    public function pelanggans()
     {
-        return $this->hasMany(Penjualan::class);
+        return $this->hasMany(Pelanggann::class);
     }
 }
